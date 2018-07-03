@@ -9,6 +9,8 @@ public class ShootyStateManager : MonoBehaviour
     public GameObject WelcomeScreen;
     public GameObject SetupScreen;
 
+    public GameObject GameObjects;
+
     public GameObject PlaneGenerator;
 
     public GameObject PointCloud;
@@ -25,20 +27,7 @@ public class ShootyStateManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Touch touch;
-        if (Input.touchCount < 1 || (touch = Input.GetTouch(0)).phase != TouchPhase.Began)
-        {
-            return;
-        }
-
-        // Raycast against the location the player touched to search for planes.
-        TrackableHit hit;
-        TrackableHitFlags raycastFilter = TrackableHitFlags.PlaneWithinPolygon |
-            TrackableHitFlags.FeaturePointWithSurfaceNormal;
-
-        if (Frame.Raycast(touch.position.x, touch.position.y, raycastFilter, out hit))
-        {
-        }
+        
     }
 
     public void SwitchState(ShootyGameStates state)
@@ -53,6 +42,8 @@ public class ShootyStateManager : MonoBehaviour
 
                     SetupScreen.SetActive(false);
                     SetPlanePointCloudActive(false);
+
+                    GameObjects.SetActive(false);
                     break;
 
                 case ShootyGameStates.LevelSetup:
@@ -65,6 +56,8 @@ public class ShootyStateManager : MonoBehaviour
                 case ShootyGameStates.Game:
                     WelcomeScreen.SetActive(false);
                     SetPlanePointCloudActive(false);
+
+                    GameObjects.SetActive(true);
                     break;
             }
 
